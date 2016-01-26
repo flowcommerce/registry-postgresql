@@ -16,7 +16,7 @@ create table ports (
   id                              text primary key,
   application_id                  text not null references applications,
   type                            text not null check(util.lower_non_empty_trimmed_string(type)),
-  number                          bigint not null check(number > 0)
+  num                             bigint not null check(num > 0)
 );
 
 comment on table ports is '
@@ -30,4 +30,4 @@ comment on column ports.type is '
 
 select audit.setup('public', 'ports');
 create index on ports(application_id);
-create unique index on ports(number) where deleted_at is null;
+create unique index on ports(num) where deleted_at is null;
