@@ -1,5 +1,18 @@
 drop table if exists ports;
 drop table if exists applications;
+drop table if exists services;
+
+create table services (
+  id                              text primary key check(util.lower_non_empty_trimmed_string(id)),
+  default_port                    bigint not null check(default_port > 0)
+);
+
+select audit.setup('public', 'services');
+
+comment on table services is '
+  Defines services that listen on ports - e.g. postgresql, nodejs, play, etc.
+  See https://www.iana.org/assignments/service-names-port-numbers/service-names-port-numbers.txt
+';
 
 create table applications (
   id                              text primary key check(util.lower_non_empty_trimmed_string(id)),
@@ -12,9 +25,9 @@ comment on table applications is '
 ';
 
 comment on column applications.ports is '
-  A denormalization of the ports table for this
-  application. Introduced to enable versioning of ports for the
-  journal.
+  The ports for this application. Stores as a list of json objects
+  corresponding to the port model defined at
+  http://apidoc.me/flow/registry/latest#model-port
 ';
 
 select audit.setup('public', 'applications');
@@ -22,21 +35,18 @@ select audit.setup('public', 'applications');
 create table ports (
   id                              text primary key,
   application_id                  text not null references applications deferrable initially deferred,
-  type                            text not null check(util.lower_non_empty_trimmed_string(type)),
-  num                             bigint not null unique check(num > 0)
+  service_id                      text not null references services,
+  internal                        bigint not null check(internal > 0),
+  external                        bigint not null unique check(external > 0)
 );
 
-comment on table ports is '
-  Keeps track of ports assigned to a given application, ensuring that
-  no port is reused. This table is essentially an index to enable
-  faster allocation of unused ports, and also enforces that all of our
-  port allocations are unique.
-';
-
-comment on column ports.type is '
-  The application type running on this port.
-';
-
 select audit.setup('public', 'ports');
-create index on ports(application_id);
 
+comment on table ports is '
+  A denormalization of the port numbers to serve as an index to enable
+  faster allocation of unused ports, and also enforce that all of our
+  external port allocations are unique.
+';
+
+create index on ports(application_id);
+create index on ports(service_id);
