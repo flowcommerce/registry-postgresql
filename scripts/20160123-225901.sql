@@ -36,8 +36,8 @@ create table ports (
   id                              text primary key,
   application_id                  text not null references applications deferrable initially deferred,
   service_id                      text not null references services,
-  internal                        bigint not null check(internal > 0),
-  external                        bigint not null unique check(external > 0)
+  external                        bigint not null unique check(external > 0),
+  internal                        bigint not null check(internal > 0)
 );
 
 select audit.setup('public', 'ports');
