@@ -16,7 +16,8 @@ comment on table services is '
 
 create table applications (
   id                              text primary key check(util.lower_non_empty_trimmed_string(id)),
-  ports                           json not null
+  ports                           json not null,
+  dependencies                    json not null
 );
 
 comment on table applications is '
@@ -50,3 +51,18 @@ comment on table ports is '
 
 create index on ports(application_id);
 create index on ports(service_id);
+
+create table dependencies (
+  id                              text primary key,
+  application_id                  text not null references applications deferrable initially deferred,
+  dependency_id                   text not null references applications
+);
+
+select audit.setup('public', 'dependencies');
+
+comment on table dependencies is '
+  A denormalization of the application dependencies
+';
+
+create index on dependencies(application_id);
+create index on dependencies(dependency_id);
