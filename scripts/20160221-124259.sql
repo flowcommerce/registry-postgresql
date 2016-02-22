@@ -2,7 +2,7 @@
 insert into applications (id, ports, dependencies, updated_by_user_id) values
 ('splashpage',               '[{"service":{"id":"play"},"internal":9000,"external":6041}]'::json, '["user", "splashpage-postgresql"]'::json, 'usr-20151006-1'),
 ('splashpage-postgresql',    '[{"service":{"id":"postgresql"},"internal":5432,"external":6049}]'::json, '[]'::json, 'usr-20151006-1'),
-('www',                      '[{"service":{"id":"play"},"internal":9000,"external":6050}]'::json, '["splashpage"]'::json, 'usr-20151006-1'),
+('www',                      '[{"service":{"id":"play"},"internal":7050,"external":6050}]'::json, '["splashpage"]'::json, 'usr-20151006-1'),
 ('fulfillment',              '[{"service":{"id":"play"},"internal":9000,"external":6061}]'::json, '["user", "fulfillment-postgresql"]'::json, 'usr-20151006-1'),
 ('fulfillment-postgresql',   '[{"service":{"id":"postgresql"},"internal":5432,"external":6069}]'::json, '[]'::json, 'usr-20151006-1'),
 ('catalog',                  '[{"service":{"id":"play"},"internal":9000,"external":6071}]'::json, '["user", "catalog-postgresql"]'::json, 'usr-20151006-1'),
