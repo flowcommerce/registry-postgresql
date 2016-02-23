@@ -28,7 +28,7 @@ values
 insert into applications
 (id, ports, dependencies, updated_by_user_id)
 values
-('user', '[{"service":{"id":"play"},"internal":9000,"external":6021}]'::json, '["registry", "user-postgresql"]'::json, 'usr-20151006-1');
+('user', '[{"service":{"id":"play"},"internal":9000,"external":6021}]'::json, '["user-postgresql"]'::json, 'usr-20151006-1');
 
 insert into ports
 (id, application_id, service_id, external, internal, updated_by_user_id)
@@ -49,8 +49,3 @@ insert into dependencies
 (id, application_id, dependency_id, updated_by_user_id)
 values
 ('dep-20160130-2', 'user', 'user-postgresql', 'usr-20151006-1');
-
-insert into dependencies
-(id, application_id, dependency_id, updated_by_user_id)
-values
-('dep-20160130-3', 'user', 'registry', 'usr-20151006-1');
