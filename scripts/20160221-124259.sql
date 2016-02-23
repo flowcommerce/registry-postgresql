@@ -39,6 +39,5 @@ insert into dependencies (id, application_id, dependency_id, updated_by_user_id)
 ('dep-20160221-110', 'organization',  'organization-postgresql', 'usr-20151006-1'),
 ('dep-20160221-111', 'organization',  'user', 'usr-20151006-1'),
 ('dep-20160221-112', 'delta-api',     'delta-postgresql', 'usr-20151006-1'),
-('dep-20160221-113', 'delta-api',     'registry', 'usr-20151006-1'),
 ('dep-20160221-114', 'delta-api',     'user', 'usr-20151006-1'),
 ('dep-20160221-115', 'delta-www',     'delta-api', 'usr-20151006-1');
