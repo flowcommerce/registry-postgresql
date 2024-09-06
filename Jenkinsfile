@@ -1,0 +1,1 @@
+skeletonPGPipeline(repository: 'registry-postgresql')
